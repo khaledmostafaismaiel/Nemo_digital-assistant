@@ -5,17 +5,53 @@ import wikipedia  # pip install wikipedia
 import webbrowser
 import os
 import smtplib
+#import wmi
+import ctypes
+import pyautogui
+import random
+from playsound import playsound
+import time
+import psutil
+
+
 
 engine = pyttsx3.init('espeak')
 voices = engine.getProperty('voices')
 engine.setProperty('rate', 140)
 #engine.setProperty('voice', voices[0].id)
-engine.setProperty('voice', 'english+f1')
+engine.setProperty('voice', 'english+f2')
 engine.setProperty('volume', 1)
 engine.setProperty('female', voices[0].gender)
 engine.setProperty(22, voices[0].age)
 
-        
+
+remind_speech = 'global'
+
+
+# Power Time Convert
+def secs2hours(secs):
+    mm, ss = divmod(secs, 60)
+    hh, mm = divmod(mm, 60)
+    return "%dhour, %02d minute, %02s seconds" % (hh, mm, ss)
+
+def brightness(voice_note):
+	if 'decrease ' in voice_note:
+		print('ok listen.......')
+		dec = wmi.WMI(namespace='wmi')
+		methods = dec.WmiMonitorBrightnessMethods()[0]
+		methods.WmiSetBrightness(30, 0)
+	elif 'increase ' in voice_note:
+		print('ok listen.......')
+		ins = wmi.WMI(namespace='wmi')
+		methods = ins.WmiMonitorBrightnessMethods()[0]
+		methods.WmiSetBrightness(100, 0)
+
+def play_sound(mp3_list):
+    mp3 = random.choice(mp3_list)
+    playsound(mp3)
+
+
+
 def say_my_name():
 
 #this loop while break if you said nemo in query for called "Nemo assistant" and privent it from searching in every word lestining for it 
@@ -81,7 +117,8 @@ if __name__ == "__main__":
     
     welcome_message()
     
-    
+while True :
+        
     while True:
 
         say_my_name()
@@ -94,7 +131,6 @@ if __name__ == "__main__":
             results = wikipedia.summary(query, sentences=2)
             speak("According to Wikipedia")
             speak(results)
-
 
         elif (('open' in query)and('youtube' in query)):
             webbrowser.open('https://www.youtube.com', new=0, autoraise=False)
@@ -141,6 +177,7 @@ if __name__ == "__main__":
         elif (('open' in query)and('songs' in query)):
             webbrowser.open('https://www.youtube.com/watch?v=sG9mZWOqgFc&list=RDsG9mZWOqgFc&start_radio=1&pbjreload=10', new=0, autoraise=False)
             speak('Enjoy !')
+            '''
 
         elif 'music' in query:
             music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
@@ -148,15 +185,33 @@ if __name__ == "__main__":
             speak('Enjoy !')
             os.startfile(os.path.join(music_dir, songs[0]))
             '''
+            '''
+
             music_dir = 
             music = ['amr diab','asala']
             random_music = music + random.choice.(music)+ '.mp3' 
             speak('Enjoy !')
             os.system(random_music)
             '''
+
+        elif query == 'play music' or query == 'romantic bollywood music' or query == ' bollywood music':
+            speak('Enjoy !')
+            playsound('Main_Hoon_Saath_Tere.mp3')
+            '''
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"The time is {strTime}")
+
+            '''
+        elif 'date' in query and 'today' in query:
+            current_time = time.strftime("%d:%B:%Y:%A:%H:%M:%S")
+            speak(current_time)
+
+        elif 'the time' in query:
+            speak('and time is' + time.strftime("%H %M %S"))
+
+        elif 'day we are' in query:
+            speak(time.strftime("%A"))
 
         elif 'open code' in query:
             codePath = "bin/code"
@@ -194,6 +249,97 @@ if __name__ == "__main__":
             speak('i can send e mails')            
             speak('i can search about every thing')
             speak('i can turn off my self')            
+            speak('my creator try to develop a way to make me do some short talks with humans')
+
+        elif (('ok google' in query) or ('hi google' in query) or ('hello google' in query)):
+            speak('i am flatter, but google is not me. my name is rose if you forget it')
+            
+        elif (('ok siri' in query) or ('hi siri' in query) or ('hello siri' in query)):
+            speak('i am flatter, but siri is not me. my name is rose if you forget it')
+
+        elif (('ok alexa' in query) or ('hi alexa' in query) or ('hello alexa' in query)):
+            speak('i am flatter, but alexa is not me. my name is rose if you forget it')
+
+        elif (('i like you' in query) or ('i love you' in query) or ('you are better than ' in query)):
+            speak('oh')
+            speak('you just made my day')
+
+        elif (('your best friend' in query) or ('your friend' in query)):
+            speak('khaled is my best friend he is my creator.')
+
+        elif (('you have boyfriend' in query) or ('you have a boyfriend' in query) \
+            or ('you have boy friend' in query) or ('you in relationship' in query) or ('you in a relationship' in query)):
+            speak('i think its complicated')
+
+        elif 'will you marry me' in query:
+            speak('i think its complicated , sorry i can\'t')
+
+        elif 'who are you' in query or 'about yourself' in query:
+            speak('iam rose and iam a digital assistant and i will be the smartest one as soon as posible,')
+            speak('khaled mostafa is my creator and he start developing me at 15 5 2019')
+
+        elif 'how are you' in query:
+            speak('oh')
+            speak('iam fine and you !')
+
+        elif 'logout' in query:
+            speak('ok')
+            ctypes.windll.user32.LockWorkStation()
+
+        elif 'take screenshot' in query or 'take screen shot' in query or 'snapshot' in query \
+        or 'take a screenshot' in query or 'take a screen shot' in query:
+            speak('ok,let me take a screenshot ')
+            speak('check your desktop, i saved there')
+            pic = pyautogui.screenshot()
+            pic.save('C:/home/robotics')
+
+        elif 'your born' in query or ' you born' in query or 'how old are you' in query or 'your birthday' in query:
+            speak('my creator starts coding me at 15,5,2019')
+
+        elif ('who' in query and 'creats you' in query) or ('who' in query and 'your creator' in query):
+            speak('khaled mostafa is my creator')
+
+        elif 'your favourite food' in query:
+            speak('a lot of zeros and ones')
+
+        elif 'battery' in query  and 'percentage' in query:
+            battery = psutil.sensors_battery()
+            plugged = battery.power_plugged
+            percent = int(battery.percent)
+            time_left = secs2hours(battery.secsleft)
+            speak(str(percent))
+            if percent < 40 and plugged == False:
+                speak('sir, please connect charger because i can survive only ' + time_left)
+            if percent < 40 and plugged == True:
+                speak("don't worry,charger is connected")
+            else:
+                speak('no need to connect the charger because i can survive ' + time_left)
+
+        elif 'sing song' in query or 'sing a song' in query:
+            speak('la la la la la la la ')
+            speak('la la la la la la la ')
+            speak(' la!')
+            speak('la la la la la la la ')
+            
+            '''
+        # Remind command
+        elif 'add' in query and 'reminder' in query:
+            speak('what should i remind?')
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                r.adjust_for_ambient_noise(source)
+                speak('say')
+                audio = r.listen(source=source, timeout=10, phrase_time_limit=3)
+                global remind_speech
+                remind_speech = r.recognize_google(audio)
+                speak('alright, i will remind you' + remind_speech)
+            '''
+        # Ask Reminder
+        elif 'reminder' in query:
+            if remind_speech is 'global':
+                speak('you do not have any reminder for today')
+            else:
+                speak('you have one reminder' + remind_speech)
 
         elif 'send email' in query:
             try:
@@ -207,7 +353,9 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("Sorry ,I am not able to send this email")
-
+        
+        elif 'brightness' in query:
+            brightness(query)
         else:
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=1)
