@@ -28,6 +28,18 @@ engine.setProperty(22, voices[0].age)
 remind_speech = 'global'
 
 
+
+
+
+
+def write_in_database(speaker,sentence):
+    fw=open('database.txt','a')
+    fw.write(speaker + "...")
+    fw.write(sentence + "\n")
+    fw.close()
+
+
+
 # Power Time Convert
 def secs2hours(secs):
     mm, ss = divmod(secs, 60)
@@ -65,7 +77,7 @@ def speak(audio):
     print('Rose: ' + audio)  # i add this line to print what bondo2 said
     engine.say(audio)
     engine.runAndWait()
-
+    write_in_database("rose",audio)
 
 def welcome_message():
     hour = int(datetime.datetime.now().hour)
@@ -100,6 +112,8 @@ def takeCommand():
         print(e)
         print("Say that again please...")
         return "None"
+    
+    write_in_database("you",query)
     return query
 
 
@@ -174,8 +188,8 @@ while True :
         elif (('open' in query)and('programiz' in query)):
             webbrowser.open('https://www.programiz.com/', new=0, autoraise=False)
     
-        elif (('open' in query)and('songs' in query)):
-            webbrowser.open('https://www.youtube.com/watch?v=sG9mZWOqgFc&list=RDsG9mZWOqgFc&start_radio=1&pbjreload=10', new=0, autoraise=False)
+        elif (('open' in query)and('songs' in query)) or (('open' in query)and('song' in query)):
+            webbrowser.open('https://www.youtube.com/watch?v=hlznpxNGFGQ&list=RDhlznpxNGFGQ&start_radio=1', new=0, autoraise=False)
             speak('Enjoy !')
             '''
 
@@ -280,7 +294,7 @@ while True :
 
         elif 'how are you' in query:
             speak('oh')
-            speak('iam fine and you !')
+            speak('iam fine and you ! , how have you been')
 
         elif 'logout' in query:
             speak('ok')
