@@ -444,3 +444,13 @@ you...Rosie
 rosa...Good Evening!
 rosa...My name is Rosa. How may I help you ?
 you...Rosa
+rosa...Good Evening!
+rosa...My name is Rosa. How may I help you ?
+you...Rosa Rosa Rosa Rosa
+rosa...yes sir
+you...Rosa Rosa Rosa
+rosa...The Duck family is a fictional family of cartoon ducks related to Disney character Donald Duck.
+you...Rosa
+rosa...yes sir
+you...how old are you
+rosa...my creator starts coding me at 15,5,2019
