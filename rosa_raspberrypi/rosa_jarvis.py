@@ -31,9 +31,9 @@ remind_speech = 'global'
 
 
 
-
+database_file_name = 'database.txt'
 def write_in_database(speaker,sentence):
-    fw=open('database.txt','a')
+    fw=open(database_file_name,'a')
     fw.write(speaker + "...")
     fw.write(sentence + "\n")
     fw.close()
@@ -106,10 +106,10 @@ def takeCommand():
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language='en-US')
-        print(f"You : {query}\n")
+        print("You :" ,query)
     # except sr.UnknownValueError :
     except Exception as e:
-        print(e)
+        print("You :" ,e)
         print("Say that again please...")
         return "None"
     
@@ -370,6 +370,20 @@ while True :
         
         elif 'brightness' in query:
             brightness(query)
+        
+        elif 'delete database' in query:
+            os.remove(database_file_name)
+            speak("ok,its done.")
+
+            '''
+        elif 'list directory' in query:
+            print(os.listdir("parent_dir"))
+            speak("ok,its done.")
+            '''
+
+        elif 'current directory' in query:
+            speak(os.getcwd())
+        
         else:
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=1)
